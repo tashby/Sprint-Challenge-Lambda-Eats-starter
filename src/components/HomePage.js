@@ -5,8 +5,9 @@ export default function HomePage() {
         <div> 
             <div>
                 <nav>
-                    <a href="#">Home</a>
-                    <a href="#">Help</a>
+                    <a href="/">Home</a>
+                    <br></br>
+                    <a href="/pizza">Order Form</a>
                 </nav>
             </div>
         </div>
