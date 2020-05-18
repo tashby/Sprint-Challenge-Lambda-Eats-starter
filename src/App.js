@@ -1,12 +1,14 @@
 import React, {useState} from "react";
-import HomePage from "./HomePage"
+import HomePage from "./components/HomePage"
+import {Route} from "react-router-dom"
 
 
 const App = () => {
   return (
     <>
-      <h1>Lambda Eats</h1>
-      <p><HomePage /></p>
+  <div>
+   <Route path="/HomePage" component={HomePage} />
+    </div>
     </>
   );
 };
