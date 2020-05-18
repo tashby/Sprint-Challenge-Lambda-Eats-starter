@@ -1,53 +1,46 @@
 import React, {useState} from "react";
 import * as yup from "yup";
 import axios from "axios";
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, FormText, Badge } from 'reactstrap';
 
 //Yup Validation
 const formSchema = yup.object().shape({
-    name: yup
-        .string()
-        .min(2, "Name must be at least 2 characters")
-        .required("Name is a required field"),
-    pizzaSize: yup
-        .string()
-        .required("Must Select a Pizza Size"),
-    sausage: yup
-        .string(),
-    pepperoni: yup
-        .string(),
-    bacon: yup
-        .string(),
-    veggies: yup
-        .string(),
-    special: yup
-        .string()
+    name: yup.string().min(2, "Minimum 2 characters").required("Name is required"),
+    size: yup.string().required("Select a Size"),
+    meatball: yup.string(),
+    pepperoni: yup.string(),
+    chicken: yup.string(),
+    veggies: yup.string(),
+    notes: yup.string()
 })
 
 //Set state
 export default function OrderForm() {
+    //adding in order post to top
+    const [order, setOrder] = useState()
+
+    //setting initial form and error state
     const [formState, setFormState] = useState({
         name: "",
-        pizzaSize: "",
-        sausage: false,
+        size: "",
+        meatball: false,
         pepperoni: false,
-        bacon: false,
+        chicken: false,
         veggies: false,
-        special: ""
+        notes: ""
     });
-
-    const [post, setPost] = useState()
 
     const [errorState, setErrorState] = useState({
         name: "",
-        pizzaSize: "",
-        sausage: "",
+        size: "",
+        meatball: "",
         pepperoni: "",
-        bacon: "",
+        chicken: "",
         veggies: "",
-        special: ""
+        notes: ""
     });
 
+    //Validation
     const validate = e => {
         let value = 
         e.target.type ==="checkbox" ? e.target.checked : e.target.value;
@@ -67,28 +60,32 @@ export default function OrderForm() {
                 });
             });
     };
-
+//ChangeHandle
     const inputChange = e => {
         e.persist();
-
         validate(e)
         let value =
         e.target.type === "checkbox" ? e.target.checked : e.target.value;
         setFormState({...formState, [e.target.name]: value});
     };
-
+//Axios and Post data to reqres
     const formSubmit = e => {
         e.preventDefault();
         console.log("form submitted!")
-        
         axios
             .post("https://reqres.in/api/users", formState)
-            .then(response => { 
-                  setPost(response.data);
-                  console.log("Success", response)
+            .then(response => {setOrder(response.data);
+                  console.log(response)
                 })
             .catch(err => console.log("Error! Resubmit your form please!",err));
-    setFormState({name: "", pizzaSize: "", sausage: false, pepperoni: false, bacon:false, veggies:false, special: ""})
+            setFormState(
+                {name: "", 
+                size: "", 
+                meatball: false, 
+                pepperoni: false,
+                 chicken:false, 
+                 veggies:false, 
+                 notes: ""})
     };
 
     return (
@@ -97,24 +94,23 @@ export default function OrderForm() {
 
 
       <FormGroup>
-        <Label for="nam">Name:</Label>
+        <Label for="name">Name:</Label>
         <Input  type="text"
                     name="name"
                     id="name"
                     value={formState.name}
-                    onChange={inputChange} />
-                    
+                    onChange={inputChange} />        
       </FormGroup>
 
 
       <FormGroup>
-        <Label for="pizzaSize">Select Pizza</Label>
+        <Label for="size">Select a Size</Label>
         <Input type="select"  
-                    value={formState.pizzaSize}
-                    name="pizzaSize"
-                    id="pizzaSize"
+                    value={formState.size}
+                    name="size"
+                    id="size"
                     onChange={inputChange}>
-          <option value="" disabled={true}>Please Select Pizza Size</option>
+          <option value="" disabled={true}>Please Select a Size</option>
                     <option value="Small">Small</option>
                     <option value="Medium">Medium</option>
                     <option value="Large">Large</option>
@@ -123,48 +119,48 @@ export default function OrderForm() {
     
       
       <FormGroup check>
+      <Badge color="danger">Pepperoni</Badge>
         <Label check>
           <Input  name="pepperoni"
                     type="checkbox"
                     checked={formState.pepperoni}
                     onChange={inputChange} />{' '}
-          pepperoni
         </Label>
+        <Badge color="warning">Chicken</Badge>
         <Label check>
-          <Input  name="bacon"
+          <Input  name="chicken"
                     type="checkbox"
-                    checked={formState.bacon}
+                    checked={formState.chicken}
                     onChange={inputChange} />{' '}
-          bacon
         </Label>
+        <Badge color="secondary">Meatball</Badge>
         <Label check>
-          <Input  name="sausage"
+          <Input  name="meatball"
                     type="checkbox"
-                    checked={formState.sausage}
+                    checked={formState.meatball}
                     onChange={inputChange} />{' '}
-          Sausage
         </Label>
+        <Badge color="success">Veggies</Badge>
         <Label check>
           <Input  name="veggies"
                     type="checkbox"
                     checked={formState.veggies}
                     onChange={inputChange} />{' '}
-          veggies
         </Label>
       </FormGroup>
-
+        <br></br>
       <FormGroup>
-        <Label for="exampleText">Special Instructions:</Label>
+        <Label for="exampleText">Notes:</Label>
         <Input type="textarea" 
-        id="special"
-                    name="special"
-                    value={formState.special}
+        id="notes"
+                    name="notes"
+                    value={formState.notes}
                     onChange={inputChange} />
       </FormGroup>
      
 
-      <Button>Submit</Button>
-
+      <Button type="submit">Submit</Button>
+      
 
     </Form>
 

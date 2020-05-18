@@ -7,7 +7,7 @@ import {Route} from "react-router-dom"
 const App = () => {
   return (
     <>
-  <div>
+  <div >
    <Route path="/" component={HomePage} />
    <Route path="/pizza" component={OrderForm} />
     </div>
