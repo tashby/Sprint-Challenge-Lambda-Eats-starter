@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import HomePage from "./components/HomePage"
-import Form from "./components/Form"
+import OrderForm from "./components/OrderForm"
 import {Route} from "react-router-dom"
 
 
@@ -9,7 +9,7 @@ const App = () => {
     <>
   <div>
    <Route path="/" component={HomePage} />
-   <Route path="/pizza" component={Form} />
+   <Route path="/pizza" component={OrderForm} />
     </div>
     </>
   );
