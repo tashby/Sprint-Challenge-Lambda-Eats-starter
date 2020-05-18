@@ -1,4 +1,5 @@
 import React from "react";
+import Pizza from "./img/Pizza.jpg";
 
 export default function HomePage() {
     return (
@@ -9,7 +10,7 @@ export default function HomePage() {
                     <a href="#">Help</a>
                 </nav>
                 <br></br>
-                <h2> Pizza </h2>
+                <h2> <img src={Pizza} alt={"pizza"} height="100px" /></h2>
             </div>
         </div>
     )
