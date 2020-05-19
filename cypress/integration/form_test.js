@@ -1,4 +1,4 @@
-describe("Testing our form inputs", ()=> {
+describe("Test", ()=> {
     beforeEach(function(){
         cy.visit("http://localhost:3000");
     })
