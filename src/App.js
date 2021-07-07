@@ -1,10 +1,16 @@
-import React from "react";
+import React, {useState} from "react";
+import HomePage from "./components/HomePage"
+import OrderForm from "./components/OrderForm"
+import {Route} from "react-router-dom"
+
 
 const App = () => {
   return (
     <>
-      <h1>Lambda Eats</h1>
-      <p>You can remove this code and create your own header</p>
+  <div >
+   <Route path="/" component={HomePage} />
+   <Route path="/pizza" component={OrderForm} />
+    </div>
     </>
   );
 };
